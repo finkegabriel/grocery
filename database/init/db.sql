@@ -6,7 +6,7 @@
 
 CREATE TABLE IF NOT EXISTS barcodes (
   id INTEGER PRIMARY KEY,
-  code TEXT DEFAULT "" NOT NULL,
+  code TEXT DEFAULT "" NOT NULL
 );
 
 -- INSERT INTO barcodes
