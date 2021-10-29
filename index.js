@@ -2,14 +2,20 @@ var express = require("express");
 var app = express();
 var { readBarcodes, readList } = require('./database/read');
 
-app.get("/grocery", async(req, res, next) => {
+app.get("/grocery", async (req, res, next) => {
+    const { code } = req.params;
     const rest = await readBarcodes();
-    console.log("rest ",rest);
-    res.status(200).json(rest);
+    console.log("rest ", rest);
+    return res.status(200).json(rest);
 });
 
 app.post("/grocery", (req, res, next) => {
-    res.json(req.body);
+    const { name, code } = req.body;
+    // if (rest == "update") {
+    //     res.send("update");
+    // }
+    console.log("name ", name);
+    console.log("code ", code);
 });
 
 app.listen(3010, () => {

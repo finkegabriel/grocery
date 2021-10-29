@@ -1,17 +1,19 @@
 const knex = require('./knex');
 
-async function readList(){
+async function readList() {
     const result = await knex.conntection('list').select('*');
     return result;
 }
 
-async function readBarcodes(){
+async function readBarcodes() {
     const result = await knex.conntection('barcodes').select('*');
-    console.log(result);
+    if (result.length === 0) {
+        return "update"
+    }
     return result;
 }
 
-module.exports ={
+module.exports = {
     readList,
     readBarcodes,
 }
