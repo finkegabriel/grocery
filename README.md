@@ -1,3 +1,5 @@
 # migrate tables using 
-.read database/init/db.sql
+sqlite3 grocery && .read database/init/db.sql
 
+# quit sqlite3
+.quit

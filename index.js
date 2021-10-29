@@ -1,16 +1,17 @@
 var express = require("express");
 var app = express();
-var bodyParser = require("body-parser");
+var { readBarcodes, readList } = require('./database/read');
 
-app.get("/grocery", (req, res, next) => {
-    
-    // res.json(["Tony", "Lisa", "Michael", "Ginger", "Food"]);
+app.get("/grocery", async(req, res, next) => {
+    const rest = await readBarcodes();
+    console.log("rest ",rest);
+    res.status(200).json(rest);
 });
 
 app.post("/grocery", (req, res, next) => {
     res.json(req.body);
 });
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+app.listen(3010, () => {
+    console.log("Server running on port 3010");
 });
