@@ -8,7 +8,9 @@ var jsonParser = bodyParser.json()
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.use(cors({
-    origin: '*'
+    origin: '*',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
 }));
 
 app.get("/grocery", async (req, res, next) => {

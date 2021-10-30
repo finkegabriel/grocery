@@ -8,7 +8,8 @@ async function readList() {
 async function readBarcodes(code) {
     const result = await knex.conntection('barcodes').select('*').where('code', code);
     if (result.length === 0) {
-        return ({data:"update"})
+        const results = await knex.conntection('barcodes').insert({ code });
+        return ({ data: "update", result: results });
     }
     return result;
 }

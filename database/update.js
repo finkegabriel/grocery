@@ -3,15 +3,27 @@ const knex = require('./knex').conntection;
 async function updateName(data) {
     const { name, code } = data;
     console.log(name, code, " data");
-    if (name) {
-        const result = await knex('barcodes').insert({ name: name, code: code });
-        const final = await knex('list').insert({ name: name, code: code });
-        console.log("updating barcodes ", result);
-        return final;
+    const checkIfExists = await knex.select('*').from('barcodes').where('code', code);
+    console.log(checkIfExists, " checkIfExists");
+    if (name == undefined || name == "") {
+        try {
+            const result = await knex('barcodes').insert({ name: name, code: code });
+            console.log("updating barcodes ", result);
+            return result;
+        } catch (e) {
+            console.log(e);
+        }
     }
-    const res = await knex('list').insert({ name: name, code: code });
-    console.log("added to list ", res);
-    return res;
+    if (name) {
+        if (checkIfExists[0].code !== undefined) {
+            try {
+                const results = await knex('barcodes').update({ name: name }).where('code', code);
+                return results;
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }
 }
 
 async function addToList(data) {
