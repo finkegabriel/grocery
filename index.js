@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
-var { readBarcodes, readList } = require('./database/read');
+var { readBarcodes } = require('./database/read');
+var { updateName, addToList } = require('./database/update');
 var cors = require('cors');
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
@@ -16,12 +17,18 @@ app.get("/grocery", async (req, res, next) => {
     return res.status(200).json(rest);
 });
 
-app.post("/grocery",jsonParser, async (req, res, next) => {
-    // const { name, code } = req.body;
-    // console.log("name ", name,code);
-    console.log(req.body);
+app.post("/grocery", jsonParser, async (req, res, next) => {
+    const { name, data } = req.body;
+    const rest = await updateName({ name: name, code: data });
+    return res.status(200).json(rest);
 });
 
-app.listen(3010, () => {
-    console.log("Server running on port 3010");
+app.post("/grocery/list", jsonParser, async (req, res, next) => {
+    const { data } = req.body;
+    const rest = await addToList({ code: data });
+    return res.status(200).json(rest);
+});
+
+app.listen(3011, () => {
+    console.log("Server running on port 3011");
 });
