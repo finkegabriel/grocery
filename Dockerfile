@@ -3,7 +3,7 @@ WORKDIR .
 COPY package*.json ./
 
 RUN npm install
-RUN apt update && apt install -y apt-transport-https ca-certificates sqlite3
+RUN apt update && apt upgrade && apt install -y apt-transport-https ca-certificates sqlite3
 
 COPY . .
 EXPOSE 3011
