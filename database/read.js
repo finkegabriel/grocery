@@ -5,10 +5,10 @@ async function readList() {
     return result;
 }
 
-async function readBarcodes() {
-    const result = await knex.conntection('barcodes').select('*');
+async function readBarcodes(code) {
+    const result = await knex.conntection('barcodes').select('*').where('code', code);
     if (result.length === 0) {
-        return "update"
+        return ({data:"update"})
     }
     return result;
 }
