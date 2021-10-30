@@ -5,24 +5,28 @@ async function updateName(data) {
     console.log(name, code, " data");
     const checkIfExists = await knex.select('*').from('barcodes').where('code', code);
     console.log(checkIfExists, " checkIfExists");
-    if (name == undefined || name == "") {
-        try {
-            const result = await knex('barcodes').insert({ name: name, code: code });
-            console.log("updating barcodes ", result);
-            return result;
-        } catch (e) {
-            console.log(e);
-        }
-    }
-    if (name) {
-        if (checkIfExists[0].code !== undefined) {
+    try {
+        if (name == undefined || name == "" || code !== 0) {
             try {
-                const results = await knex('barcodes').update({ name: name }).where('code', code);
-                return results;
+                const result = await knex('barcodes').insert({ name: name, code: code });
+                console.log("updating barcodes ", result);
+                return result;
             } catch (e) {
                 console.log(e);
             }
         }
+        if (name) {
+            if (checkIfExists[0].code !== undefined || checkIfExists[0].code !== 0) {
+                try {
+                    const results = await knex('barcodes').update({ name: name }).where('code', code);
+                    return results;
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+        }
+    } catch (e) {
+        console.log(e);
     }
 }
 
