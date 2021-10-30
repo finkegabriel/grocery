@@ -6,4 +6,5 @@ sqlite3 grocery && .read database/init/db.sql
 
 # Docker
 docker build .
+<br></br>
 docker run  -p 49160:3011 -d #Image name or id
